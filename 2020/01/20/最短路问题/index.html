@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>最短路问题 | stoten_stone&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最短路问题一张带权图上求解给定源点和汇点之间的最短路径长度。 (本文存图均使用邻接矩阵) 单源最短路给出一张n节点m条边(有向或无向)通过第i条边有一个代价c[i],现在要求出节点s到所有节点的最短路径长度。  如上图，A点到B,C,D,E的最短路长度分别为2,2,3,6。 解决一般单源最短路问题算法的最优复杂度为$O(n\log{n}+m)$。 在算法竞赛中最广泛使用的复杂度为$O((n+m)\">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最短路问题">
+<meta property="og:url" content="http://stotenstone.github.io/2020/01/20/%E6%9C%80%E7%9F%AD%E8%B7%AF%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="stoten_stone&#39;s blog">
+<meta property="og:description" content="最短路问题一张带权图上求解给定源点和汇点之间的最短路径长度。 (本文存图均使用邻接矩阵) 单源最短路给出一张n节点m条边(有向或无向)通过第i条边有一个代价c[i],现在要求出节点s到所有节点的最短路径长度。  如上图，A点到B,C,D,E的最短路长度分别为2,2,3,6。 解决一般单源最短路问题算法的最优复杂度为$O(n\log{n}+m)$。 在算法竞赛中最广泛使用的复杂度为$O((n+m)\">
+<meta property="og:image" content="c:%5CUsers%5Ching%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200117195217087.png">
+<meta property="article:published_time" content="2020-01-20T13:16:23.867Z">
+<meta property="article:modified_time" content="2020-01-18T13:26:17.213Z">
+<meta property="article:author" content="stoten_stone">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:%5CUsers%5Ching%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200117195217087.png">
+  
+    <link rel="alternate" href="/atom.xml" title="stoten_stone&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://stotenstone.github.io"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">stoten_stone&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">�؇���Ĳ���</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-最短路问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/20/%E6%9C%80%E7%9F%AD%E8%B7%AF%E9%97%AE%E9%A2%98/" class="article-date">
+  <time datetime="2020-01-20T13:16:23.867Z" itemprop="datePublished">2020-01-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      最短路问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h1 id="最短路问题"><a href="#最短路问题" class="headerlink" title="最短路问题"></a>最短路问题</h1><p>一张带权图上求解给定源点和汇点之间的最短路径长度。</p>
+<p>(本文存图均使用邻接矩阵)</p>
+<h2 id="单源最短路"><a href="#单源最短路" class="headerlink" title="单源最短路"></a>单源最短路</h2><p>给出一张<em>n</em>节点<em>m</em>条边(有向或无向)通过第<em>i</em>条边有一个代价<code>c[i]</code>,现在要求出节点<em>s</em>到所有节点的最短路径长度。</p>
+<p><img src="C:%5CUsers%5Ching%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200117195217087.png" alt="image-20200117195217087"></p>
+<p>如上图，<em>A</em>点到<em>B</em>,<em>C</em>,<em>D</em>,<em>E</em>的最短路长度分别为2,2,3,6。</p>
+<p>解决一般单源最短路问题算法的最优复杂度为$O(n\log{n}+m)$。</p>
+<p>在算法竞赛中最广泛使用的复杂度为$O((n+m)\log{n})$。</p>
+<h3 id="dijkstra"><a href="#dijkstra" class="headerlink" title="dijkstra"></a>dijkstra</h3><h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>以起始点为中心向外层层扩展，直到扩展到终点为止。</p>
+<p>图中不能出现负权边。</p>
+<p>朴素实现$O(n^2)$。</p>
+<p>堆优化$O((n+m)\log{n})$。</p>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><h5 id="朴素算法"><a href="#朴素算法" class="headerlink" title="朴素算法"></a>朴素算法</h5><p>扩展已经求出(从源点到它)最短路径的点的范围；</p>
+<p><code>S[]</code>表示已经求出最短路径的点的集合,<code>T[]</code>表示尚未求出最短路径的点的集合；</p>
+<p><code>vis[u]</code>表示点<em>u</em>是否求出最短路径(为0即未找到,反之)(为<code>S[]</code>和<code>T[]</code>的简化)；</p>
+<p><code>dis[u]</code>表示点<em>u</em>目前已找到的最短路径(<code>dis[s]=0,dis[u]=inf</code>)；</p>
+<p><code>W[u][v]</code>表示从<em>u</em>到<em>v</em>直连边的(无边则为<em>inf</em>)；</p>
+<p>每次从<code>vis[]=0</code>的点中取一个<code>dis[]</code>最小的点<em>u</em>放入<code>S[]</code>；</p>
+<p>将所有<em>u</em>所有出边到达的点<em>v</em>；</p>
+<p>使<code>dis[v]=min(dis[v],dis[u]+W[u][v])</code>；</p>
+<p>复杂度$O(n^2)$。</p>
+<h5 id="堆优化算法"><a href="#堆优化算法" class="headerlink" title="堆优化算法"></a>堆优化算法</h5><p>将取最小值的部分使用堆实现；</p>
+<p>复杂度$O((n+m)\log{n})$。</p>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><h5 id="朴素算法-1"><a href="#朴素算法-1" class="headerlink" title="朴素算法"></a>朴素算法</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dijkstra</span><span class="params">(<span class="keyword">int</span> s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)dis[i]=<span class="number">0x7FFFFFFF</span>,vis=[i]=<span class="number">0</span>;</span><br><span class="line">    dis[i]=<span class="number">0</span>;</span><br><span class="line">    vis[i]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="keyword">int</span> min_point=<span class="number">0</span>;</span><br><span class="line">    	<span class="keyword">int</span> min_dis=<span class="number">0x7FFFFFFF</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(vis[j]==<span class="number">0</span>&amp;&amp;dis[j]&lt;min_dis)</span><br><span class="line">            &#123;</span><br><span class="line">                min_dis=dis[j];</span><br><span class="line">                min_point=j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        vis[min_point]=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(w[min_point][i]!=<span class="number">0x7FFFFFFF</span>&amp;&amp;dis[min_point]+w[min_point][i]&lt;dis[i])</span><br><span class="line">            &#123;</span><br><span class="line">                dis[i]=dis[min_point]+w[min_point][i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Bellman-Ford"><a href="#Bellman-Ford" class="headerlink" title="Bellman Ford"></a>Bellman Ford</h3><h4 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h4><p>对图进行多次松弛操作，得到所有可能的最短路径。</p>
+<p>可以含有负权边而不能有负环。</p>
+<p>使用动归思想。</p>
+<p>复杂度$O(mn)$。</p>
+<h4 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h4><p><code>dis[u]</code>表示点<em>u</em>目前已找到的最短路径(<code>dis[s]=0,dis[u]=inf</code>)；</p>
+<p><code>W[u][v]</code>表示从<em>u</em>到<em>v</em>直连边的(无边则为<em>inf</em>)；</p>
+<p><code>dis[u][i]</code>表示源点到<em>u</em>经过不超过i条边的最短路径(<code>dis[s][0]=0,dis[u][0]=inf</code>)；</p>
+<p>动态转移方程<code>dis[u][i]=min(dis[u][i],dis[k][i-1]+w[k][u])</code>；</p>
+<p>复杂度$O(mn)$。</p>
+<h4 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Bellman_Ford</span><span class="params">(<span class="keyword">int</span> s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)dis[i][<span class="number">0</span>]=inf;</span><br><span class="line">    dis[s][<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n<span class="number">-1</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> u=<span class="number">1</span>;u&lt;=n;u++)dis[u][i]=dis[u][i<span class="number">-1</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> u=<span class="number">1</span>;u&lt;=n;u++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">1</span>;k&lt;=n;k++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(w[k][u]!=<span class="number">0x7FFFFFFF</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                	dis[u][i]=<span class="built_in">min</span>(dis[u][i],dis[k][i<span class="number">-1</span>]+w[k][u]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SPFA"><a href="#SPFA" class="headerlink" title="SPFA"></a>SPFA</h3><h4 id="简介-2"><a href="#简介-2" class="headerlink" title="简介"></a>简介</h4><p><del>关于SPFA，它死了。</del></p>
+<p>Bellman Ford的队列优化。</p>
+<p>最坏复杂度$O(mn)$。</p>
+<h4 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h4><p><code>dis[u]</code>表示<em>s</em>到<em>u</em>的最短路径长度；</p>
+<p><code>vis[u]</code>表示<em>u</em>是否在队列中；</p>
+<p><code>W[u][v]</code>表示从<em>u</em>到<em>v</em>直连边的(无边则为<em>inf</em>)；</p>
+<p><code>Q[]</code>表示一个队列；</p>
+<p>将原点<em>s</em>放入队列；</p>
+<p>重复从<code>Q[]</code>中取出一个点<em>u</em>，遍历<em>u</em>能直接到达的点<em>v</em>；</p>
+<p>如果<code>dis[v]&gt;dis[u]+w[u][v]</code>则使<code>dis[v]=dis[u]+w[u][v]</code>并如果<em>v</em>不在<code>Q[]</code>中，则把点<em>v</em>加入<code>Q[]</code>；</p>
+<p>复杂度$O(mn)$。</p>
+<h4 id="代码实现-2"><a href="#代码实现-2" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SPFA</span><span class="params">(<span class="keyword">int</span> s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)dis[i]=<span class="number">0x7FFFFFFF</span>,vis[i]=<span class="number">0</span>;</span><br><span class="line">    dis[s]=<span class="number">0</span>;vis[s]=<span class="number">1</span>;Q.push(s);</span><br><span class="line">    <span class="keyword">while</span>(!Q.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> u=Q.front();Q.pop();vis[u]=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> v=<span class="number">1</span>;v&lt;=n;v++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(dis[v]&gt;dis[u]+w[u][v])</span><br><span class="line">            &#123;</span><br><span class="line">                dis[v]=dis[u]+w[u][v];</span><br><span class="line">                <span class="keyword">if</span>(vis[v]==<span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    vis[v]=<span class="number">1</span>;</span><br><span class="line">                	Q.push(v);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="判负环"><a href="#判负环" class="headerlink" title="判负环"></a>判负环</h4><p>维护一个数组<code>cnt[u]</code>，表示<em>u</em>进队的次数。</p>
+<p>如果<code>cnt[u]&gt;n</code>，则有负环。</p>
+<h2 id="多源最短路"><a href="#多源最短路" class="headerlink" title="多源最短路"></a>多源最短路</h2><h3 id="Floyd"><a href="#Floyd" class="headerlink" title="Floyd"></a>Floyd</h3><h4 id="简介-3"><a href="#简介-3" class="headerlink" title="简介"></a>简介</h4><p>又称为插点法，是一种利用动态规划的加权图中多源点最短路算法。</p>
+<p>边权可正可负，不能有负环。</p>
+<p>复杂度$O(n^3)$；</p>
+<h4 id="实现-3"><a href="#实现-3" class="headerlink" title="实现"></a>实现</h4><p><code>dis[i][j][k]</code>表示从<em>i</em>到<em>j</em>中间只经过1到<em>k</em>中除了<em>i</em>，<em>j</em>以外的点；</p>
+<p><code>W[u][v]</code>表示从<em>u</em>到<em>v</em>直连边的(无边则为<em>inf</em>)；</p>
+<p>动态转移方程<code>dis[i][j][k]=min(dis[i][j][k-1],dis[i][k][k-1]+dis[k][j][k-1])</code>。</p>
+<h4 id="代码实现-3"><a href="#代码实现-3" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Floyd</span><span class="params">(<span class="keyword">int</span> s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=N;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=N;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            dis[i][j][<span class="number">0</span>]=w[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">1</span>;k&lt;=N;k++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=N;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=N;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                dis[i][j][k]=<span class="built_in">min</span>(dis[i][j][k<span class="number">-1</span>],dis[i][k][k<span class="number">-1</span>]+dis[k][j][k<span class="number">-1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以省去第三维</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Floyd</span><span class="params">(<span class="keyword">int</span> s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=N;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=N;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            dis[i][j]=w[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">1</span>;k&lt;=N;k++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=N;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=N;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                dis[i][j]=<span class="built_in">min</span>(dis[i][j],dis[i][k]+dis[k][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="传递闭包问题"><a href="#传递闭包问题" class="headerlink" title="传递闭包问题"></a>传递闭包问题</h4><p>对于一张有向图，求每一点对间是否可达。</p>
+<h3 id="Johnson"><a href="#Johnson" class="headerlink" title="Johnson"></a>Johnson</h3><p>先跑一遍Bellman Ford/Floyd,再跑一遍dijkstra。</p>
+<h3 id="特殊算法"><a href="#特殊算法" class="headerlink" title="特殊算法"></a>特殊算法</h3><p>若边权为1，则可以使用BFS，复杂度$O(n+m)$。</p>
+<p>若为有向无环图，则可以拓扑排序完，dp解决。</p>
+<h3 id="最长路问题"><a href="#最长路问题" class="headerlink" title="最长路问题"></a>最长路问题</h3><p>没有特定的算法，点数较少的图可以暴力解决。、</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://stotenstone.github.io/2020/01/20/%E6%9C%80%E7%9F%AD%E8%B7%AF%E9%97%AE%E9%A2%98/" data-id="ck5mlovln0001ao9cenbc3m8t" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+ 
+<script src="/jquery/jquery.min.js"></script>
+
+  <div id="random_posts">
+    <h2>推荐文章</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =4
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/01/20/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">文章目录</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#最短路问题"><span class="toc-number">1.</span> <span class="toc-text">最短路问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#单源最短路"><span class="toc-number">1.1.</span> <span class="toc-text">单源最短路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dijkstra"><span class="toc-number">1.1.1.</span> <span class="toc-text">dijkstra</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#简介"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实现"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">实现</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#朴素算法"><span class="toc-number">1.1.1.2.1.</span> <span class="toc-text">朴素算法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#堆优化算法"><span class="toc-number">1.1.1.2.2.</span> <span class="toc-text">堆优化算法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码实现"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#朴素算法-1"><span class="toc-number">1.1.1.3.1.</span> <span class="toc-text">朴素算法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bellman-Ford"><span class="toc-number">1.1.2.</span> <span class="toc-text">Bellman Ford</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#简介-1"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实现-1"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码实现-1"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">代码实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPFA"><span class="toc-number">1.1.3.</span> <span class="toc-text">SPFA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#简介-2"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实现-2"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码实现-2"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">代码实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#判负环"><span class="toc-number">1.1.3.4.</span> <span class="toc-text">判负环</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多源最短路"><span class="toc-number">1.2.</span> <span class="toc-text">多源最短路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Floyd"><span class="toc-number">1.2.1.</span> <span class="toc-text">Floyd</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#简介-3"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实现-3"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码实现-3"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">代码实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#传递闭包问题"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">传递闭包问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Johnson"><span class="toc-number">1.2.2.</span> <span class="toc-text">Johnson</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特殊算法"><span class="toc-number">1.2.3.</span> <span class="toc-text">特殊算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最长路问题"><span class="toc-number">1.2.4.</span> <span class="toc-text">最长路问题</span></a></li></ol></li></ol></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+    <!--微信公众号二维码-->
+
+
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2020 stoten_stone&nbsp;|&nbsp;
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+    </div>
+     <div id="footer-right">
+      联系方式&nbsp;|&nbsp;837921858@qq.com
+    </div>
+  </div>
+</footer>
+ 
+<script src="/jquery/jquery.min.js"></script>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+  
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "e2fb4051c49842688ce669e634bc983f",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+    
+
+  
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+ 
+<script src="/js/is.js"></script>
+
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/elevator.js"></script>
+
+  </div>
+</body>
+</html>
